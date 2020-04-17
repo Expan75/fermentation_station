@@ -1,18 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const TrackDataPoint = require('../models/trackdatapoint');
+const Fermentation = require('../models/fermentation');
 const mongoose = require('mongoose');
 
-// List view // only gets the first 25 results
-router.get('/trackdata', (req, res, next) => {
-    TrackDataPoint.find({})
-        .then(data => res.json(data.slice(0, 25)))
+
+////// START OF CRUD //////
+
+// List view //
+router.get('/fermentations', (req, res, next) => {
+    Fermentation.find({})
+        .then(data => res.json(data))
         .catch(e => console.log(e));
 });
 
-// Detail view 
-router.get('/trackdata/:id', (req, res, next) => {
-    TrackDataPoint.findById({
+// Detail view //
+router.get('/fermentations/:id', (req, res, next) => {
+    Fermentation.findById({
             "_id": mongoose.Types.ObjectId(req.params.id)
         })
         .then(data => res.json(data))
@@ -24,21 +27,27 @@ router.get('/trackdata/:id', (req, res, next) => {
 //     res.send('Project was updated.')
 // });
 
-// Post
-router.post('/trackdata', (req, res, next) => {
+// Create Viev //
+router.post('/fermentations', (req, res, next) => {
 
-    TrackDataPoint.create(req.body)
+    Fermentation.create(req.body)
         .then(data => res.json(data))
         .catch(e => console.log(e));
 });
 
-// delete speficic project
-router.delete('/trackdata/:id', (req, res, next) => {
-    TrackDataPoint.findByIdAndDelete({
+// Delete View // 
+router.delete('/fermentations/:id', (req, res, next) => {
+    Fermentation.findByIdAndDelete({
             "_id": mongoose.Types.ObjectId(req.params.id)
         })
         .then(data => res.json(data))
         .catch(e => console.log(e));
 });
 
+////// END OF CRUD //////
+
+
+
+
+// Expose all routes
 module.exports = router;

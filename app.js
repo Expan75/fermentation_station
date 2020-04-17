@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 // Routes
-const datapoints = require('./routes/trackdatapoint');
+const fermentations = require('./routes/fermentations');
 
 
 
@@ -28,7 +28,7 @@ mongoose.connect(process.env.DB, {
 // Override default mongoose depreciated promises
 mongoose.Promise = global.Promise;
 
-
+// TODO: ensure safety check "*" flag
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -39,7 +39,7 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 // Force Url prefix for all routes
-app.use('/api', datapoints);
+app.use('/api', fermentations);
 
 
 app.listen(port, () => {
